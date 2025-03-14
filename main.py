@@ -11,9 +11,7 @@ from animations.core_concepts import (
 )
 from animations.advanced_concepts import (
     GeometricPropertiesScene,
-    SpecialCasesScene,
-    CyclotomicPolynomialScene,
-    MinimalPolynomialScene
+    SpecialCasesScene
 )
 from slides.slide_generator import SlideGenerator
 
@@ -110,12 +108,10 @@ def list_available_scenes() -> list[tuple[int, str, type[Scene]]]:
         # Advanced Concepts
         (7, "Geometric Properties", GeometricPropertiesScene),
         (8, "Special Cases (Square, Cube, Fourth Roots)", SpecialCasesScene),
-        (9, "Cyclotomic Polynomial", CyclotomicPolynomialScene),
-        (10, "Minimal Polynomial", MinimalPolynomialScene),
         
         # Additional Visualizations
-        (11, "Specific Roots of Unity", SpecificRootsScene),
-        (12, "Root Pattern Visualization", RootPatternScene),
+        (9, "Specific Roots of Unity", SpecificRootsScene),
+        (10, "Root Pattern Visualization", RootPatternScene),
     ]
     return scenes
 
