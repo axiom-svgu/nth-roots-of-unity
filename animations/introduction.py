@@ -51,30 +51,31 @@ class IntroductionScene(Scene):
 
         # Create a larger complex plane as the central focus
         plane = ComplexPlane(
-            x_range=[-2.5, 2.5, 1],
-            y_range=[-2.5, 2.5, 1],
+            x_range=[-2, 2, 1],
+            y_range=[-2, 2, 1],
             background_line_style={
                 "stroke_opacity": 0.6,
                 "stroke_width": 1,
             }
-        ).scale(1.5)
-        plane.center()
-        plane.shift(DOWN * 0.5)  # Move slightly down to make room for title
+        ).scale(1.2)  # Slightly smaller scale
         
-        # Add clear axis labels
-        x_label = Text("Real", font_size=24)
+        # Position plane on the right side
+        plane.shift(RIGHT * 3 + DOWN * 0.5)
+        
+        # Add clear axis labels with adjusted positions
+        x_label = Text("r", font_size=24)
         x_label.next_to(plane.x_axis.get_end(), DOWN + RIGHT, buff=0.2)
         
-        y_label = Text("Imaginary", font_size=24)
+        y_label = Text("i", font_size=24)
         y_label.next_to(plane.y_axis.get_end(), UP + LEFT, buff=0.2)
         y_label.rotate(90 * DEGREES)
         
-        # Create unit circle with clear radius indicator
-        circle = Circle(radius=1.5, color=BLUE)  # Matches plane scale
+        # Create unit circle with clear radius indicator - adjusted for new plane position
+        circle = Circle(radius=1.2, color=BLUE)  # Matches plane scale
         circle.move_to(plane.get_center())
         radius_line = Line(
             circle.get_center(),
-            circle.get_center() + RIGHT * 1.5,
+            circle.get_center() + RIGHT * 1.2,
             color=YELLOW
         )
         radius_label = Text("r=1", font_size=24, color=YELLOW)
@@ -96,13 +97,11 @@ class IntroductionScene(Scene):
         )
         self.wait(2)
 
-        # First two properties with visual demonstrations
-        properties_first_page = VGroup()
-        
+        # First two properties with visual demonstrations - positioned on the left
         # Property 1: Unit distance
         prop1 = MathTex(PROPERTIES[0])
         prop1.scale(0.8)
-        prop1.to_edge(LEFT).shift(UP * 1)
+        prop1.to_edge(LEFT, buff=1).shift(UP * 1)  # Increased left buffer
         
         # Animate multiple points at unit distance
         points = VGroup(*[
@@ -121,9 +120,9 @@ class IntroductionScene(Scene):
         prop2.next_to(prop1, DOWN, buff=1)
         prop2.align_to(prop1, LEFT)
         
-        # Show angle markers for even spacing
+        # Show angle markers for even spacing - adjusted for new plane position
         angles = VGroup(*[
-            Arc(radius=0.5, angle=2*PI/4 * i, color=RED)
+            Arc(radius=0.4, angle=2*PI/4 * i, color=RED)
             for i in range(1, 4)
         ])
         angles.move_to(plane.get_center())
@@ -138,7 +137,7 @@ class IntroductionScene(Scene):
         )
         self.wait(1)
 
-        # Second page - recreate plane and circle
+        # Second page - recreate plane and circle with same positioning
         title.to_edge(UP)
         self.play(
             Write(title),
@@ -146,10 +145,10 @@ class IntroductionScene(Scene):
             Create(circle)
         )
         
-        # Property 3 and 4 with dynamic demonstrations
+        # Property 3 and 4 with dynamic demonstrations - positioned on the left
         prop3 = MathTex(PROPERTIES[2])
         prop3.scale(0.8)
-        prop3.to_edge(LEFT).shift(UP * 1)
+        prop3.to_edge(LEFT, buff=1).shift(UP * 1)  # Increased left buffer
         
         # Show starting point at (1,0)
         start_point = Dot(circle.point_at_angle(0), color=GREEN)
