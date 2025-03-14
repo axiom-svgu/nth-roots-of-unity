@@ -6,6 +6,7 @@ from slides.slide_generator import SlideGenerator
 def render_manim_scene(scene_class: type[Scene]) -> None:
     """Render a specific Manim scene."""
     scene = scene_class()
+    
     scene.render()
 
 def list_available_scenes() -> list[tuple[int, str, type[Scene]]]:
