@@ -39,234 +39,146 @@ class IntroductionScene(Scene):
         self.play(Write(real_example))
         self.wait(3)
         
-        # Transition to unity roots concept
-        unity_intro = Text(
-            "But what if we want numbers that come back to 1\n"
-            "after multiplying by themselves a certain number of times?",
-            font_size=32
-        ).to_edge(UP)
-        
-        equation = MathTex("z^n = 1")
-        equation.scale(1.5)
-        equation.next_to(unity_intro, DOWN, buff=1)
-        
-        # Example with square roots of unity
-        square_root_example = VGroup(
-            Text("For example, when n=2:", font_size=28),
-            MathTex("1 \\times 1 = 1"),
-            MathTex("-1 \\times -1 = 1"),
-            Text("These are the square roots of unity!", font_size=28, color=GREEN)
-        ).arrange(DOWN, buff=0.4)
-        square_root_example.next_to(equation, DOWN, buff=1)
-        
-        # Transition to main concept
+        # Clear screen for unity roots concept
         self.play(
-            FadeOut(explanation),
-            FadeOut(question),
-            FadeOut(real_example),
+            *[FadeOut(mob) for mob in self.mobjects]
         )
-        self.play(Write(unity_intro))
-        self.wait(2)
-        self.play(Write(equation))
-        self.wait(2)
-        self.play(Write(square_root_example))
-        self.wait(4)
         
-        # Clear for next section
+        # Setup main title and complex plane
+        title = MathTex(ROOTS_OF_UNITY_TITLE)
+        title.scale(1.2)
+        title.to_edge(UP)
+
+        # Create a larger complex plane as the central focus
+        plane = ComplexPlane(
+            x_range=[-2.5, 2.5, 1],
+            y_range=[-2.5, 2.5, 1],
+            background_line_style={
+                "stroke_opacity": 0.6,
+                "stroke_width": 1,
+            }
+        ).scale(1.5)
+        plane.center()
+        plane.shift(DOWN * 0.5)  # Move slightly down to make room for title
+        
+        # Add clear axis labels
+        x_label = Text("Real", font_size=24)
+        x_label.next_to(plane.x_axis.get_end(), DOWN + RIGHT, buff=0.2)
+        
+        y_label = Text("Imaginary", font_size=24)
+        y_label.next_to(plane.y_axis.get_end(), UP + LEFT, buff=0.2)
+        y_label.rotate(90 * DEGREES)
+        
+        # Create unit circle with clear radius indicator
+        circle = Circle(radius=1.5, color=BLUE)  # Matches plane scale
+        circle.move_to(plane.get_center())
+        radius_line = Line(
+            circle.get_center(),
+            circle.get_center() + RIGHT * 1.5,
+            color=YELLOW
+        )
+        radius_label = Text("r=1", font_size=24, color=YELLOW)
+        radius_label.next_to(radius_line.get_center(), DOWN, buff=0.1)
+
+        # Show plane and basic elements with animations
+        self.play(Write(title))
+        self.play(Create(plane))
+        self.play(
+            Write(x_label),
+            Write(y_label)
+        )
+        self.wait(1)
+        
+        self.play(
+            Create(circle),
+            Create(radius_line),
+            Write(radius_label)
+        )
+        self.wait(2)
+
+        # First two properties with visual demonstrations
+        properties_first_page = VGroup()
+        
+        # Property 1: Unit distance
+        prop1 = MathTex(PROPERTIES[0])
+        prop1.scale(0.8)
+        prop1.to_edge(LEFT).shift(UP * 1)
+        
+        # Animate multiple points at unit distance
+        points = VGroup(*[
+            Dot(circle.point_from_proportion(i/8), color=GREEN)
+            for i in range(8)
+        ])
+        
+        self.play(Write(prop1))
+        self.play(AnimationGroup(*[Create(p) for p in points], lag_ratio=0.1))
+        self.wait(1)
+        self.play(FadeOut(points))
+        
+        # Property 2: Even spacing
+        prop2 = MathTex(PROPERTIES[1])
+        prop2.scale(0.8)
+        prop2.next_to(prop1, DOWN, buff=1)
+        prop2.align_to(prop1, LEFT)
+        
+        # Show angle markers for even spacing
+        angles = VGroup(*[
+            Arc(radius=0.5, angle=2*PI/4 * i, color=RED)
+            for i in range(1, 4)
+        ])
+        angles.move_to(plane.get_center())
+        
+        self.play(Write(prop2))
+        self.play(Create(angles))
+        self.wait(2)
+        
+        # Clear for next page
         self.play(
             *[FadeOut(mob) for mob in self.mobjects]
         )
         self.wait(1)
 
-        # Main title with adjusted position
-        title = MathTex(ROOTS_OF_UNITY_TITLE)
-        title.scale(1.5)
-        title.to_edge(UP).shift(LEFT * 3)  # Moved more to the left
-
-        # Create and setup complex plane - moved right and made slightly smaller
-        plane = ComplexPlane(
-            x_range=[-2, 2, 1],
-            y_range=[-2, 2, 1],
-            background_line_style={
-                "stroke_opacity": 0.6,
-                "stroke_width": 1,
-            }
-        ).scale(1)  # Reduced scale
-        plane.shift(RIGHT * 4)  # Moved further right
-        
-        # Add axis labels with better positioning
-        x_label = Text("Real", font_size=20)
-        x_label.next_to(plane.x_axis.get_end(), DOWN + RIGHT, buff=0.1)
-        
-        y_label = Text("Imaginary", font_size=20)
-        y_label.next_to(plane.y_axis.get_end(), UP + LEFT, buff=0.1)
-        y_label.rotate(90 * DEGREES)  # Rotate for better fit
-        
-        plane_title = MathTex(COMPLEX_PLANE_TITLE)
-        plane_title.scale(0.8)  # Made smaller
-        plane_title.next_to(plane, UP, buff=0.2)
-
-        # Create unit circle with radius indicator - adjusted for new plane size
-        circle = Circle(radius=1, color=BLUE)  # Adjusted radius
-        circle.shift(RIGHT * 4)  # Match plane position
-        radius_line = Line(
-            circle.get_center(),
-            circle.get_center() + RIGHT * 1,
-            color=YELLOW
-        )
-        radius_label = Text("r=1", font_size=20, color=YELLOW)  # Simplified label
-        radius_label.next_to(radius_line.get_center(), DOWN, buff=0.1)
-
-        plane_explanation = Text(
-            "We need complex numbers\nto find all roots",
-            font_size=24,
-            line_spacing=1.5
-        )
-        
-        circle_explanation = Text(
-            "All roots lie on the\nunit circle",
-            font_size=24,
-            line_spacing=1.5
-        )
-        
-        # Organize explanations on the left
-        explanations = VGroup(plane_explanation, circle_explanation)
-        explanations.arrange(DOWN, buff=0.8)
-        explanations.next_to(title, DOWN, buff=1)
-        
-        # Animation sequence with better timing
-        self.play(Write(title))
-        self.wait(2)
-        
-        # Show plane with labels
+        # Second page - recreate plane and circle
+        title.to_edge(UP)
         self.play(
+            Write(title),
             Create(plane),
-            Write(plane_title),
+            Create(circle)
         )
-        self.wait(1)
-        self.play(
-            Write(x_label),
-            Write(y_label)
-        )
-        self.wait(2)
         
-        # Show first explanation and circle
-        self.play(Write(plane_explanation))
-        self.wait(2)
+        # Property 3 and 4 with dynamic demonstrations
+        prop3 = MathTex(PROPERTIES[2])
+        prop3.scale(0.8)
+        prop3.to_edge(LEFT).shift(UP * 1)
         
-        self.play(
-            Create(circle),
-            Create(radius_line),
-            Write(radius_label),
-        )
-        self.play(Write(circle_explanation))
-        self.wait(3)
-
-        # Clear explanations for properties
-        self.play(
-            FadeOut(plane_explanation),
-            FadeOut(circle_explanation),
-            FadeOut(radius_line),
-            FadeOut(radius_label)
-        )
-        self.wait(1)
-
-        # Display properties with better spacing
-        properties = VGroup()
-        property_explanations = VGroup()
+        # Show starting point at (1,0)
+        start_point = Dot(circle.point_at_angle(0), color=GREEN)
+        start_label = MathTex("1").next_to(start_point, RIGHT)
         
-        for i, prop in enumerate(PROPERTIES):
-            property_group = VGroup()
-            
-            property_tex = MathTex(prop)
-            property_tex.scale(0.6)  # Made smaller
-            
-            explanation = Text(
-                self.get_property_explanation(i),
-                font_size=20,  # Smaller font
-                color=BLUE_B
+        self.play(Write(prop3))
+        self.play(
+            Create(start_point),
+            Write(start_label)
+        )
+        
+        # Property 4 with rotation demonstration
+        prop4 = MathTex(PROPERTIES[3])
+        prop4.scale(0.8)
+        prop4.next_to(prop3, DOWN, buff=1)
+        prop4.align_to(prop3, LEFT)
+        
+        # Demonstrate rotation for different k values
+        rotating_point = Dot(circle.point_at_angle(0), color=YELLOW)
+        self.play(Write(prop4))
+        
+        for angle in [PI/2, PI, 3*PI/2]:
+            self.play(
+                rotating_point.animate.move_to(circle.point_at_angle(angle)),
+                run_time=0.5
             )
-            
-            property_group.add(property_tex, explanation)
-            property_group.arrange(DOWN, buff=0.2)
-            
-            if i == 0:
-                property_group.next_to(title, DOWN, buff=1)
-            else:
-                property_group.next_to(properties[i-1], DOWN, buff=0.6)
-            
-            property_group.align_to(title, LEFT)
-            properties.add(property_group)
-            
-            self.play(Write(property_tex))
-            self.play(Write(explanation))
-            self.wait(2)
-
+        
         self.wait(2)
-
-        # Clear for formulas
-        self.play(FadeOut(properties))
-        self.wait(1)
-
-        # Show Euler's formula with better positioning
-        euler_group = VGroup()
         
-        euler_explanation = Text(
-            "Euler's formula connects complex\nnumbers with circles:",
-            font_size=24,
-            line_spacing=1.5
-        )
-        
-        euler = MathTex(EULER_FORMULA)
-        euler.scale(0.8)
-        
-        euler_group.add(euler_explanation, euler)
-        euler_group.arrange(DOWN, buff=0.5)
-        euler_group.next_to(title, DOWN, buff=1)
-        euler_group.align_to(title, LEFT)
-        
-        self.play(Write(euler_explanation))
-        self.wait(1)
-        self.play(Write(euler))
-        self.wait(2)
-
-        # Show De Moivre's formula with better positioning
-        demoivre_group = VGroup()
-        
-        demoivre_explanation = Text(
-            "De Moivre's formula helps us\nfind powers:",
-            font_size=24,
-            line_spacing=1.5
-        )
-        
-        demoivre = MathTex(DE_MOIVRE_FORMULA)
-        demoivre.scale(0.8)
-        
-        demoivre_group.add(demoivre_explanation, demoivre)
-        demoivre_group.arrange(DOWN, buff=0.5)
-        demoivre_group.next_to(euler_group, DOWN, buff=1)
-        demoivre_group.align_to(euler_group, LEFT)
-        
-        self.play(Write(demoivre_explanation))
-        self.wait(1)
-        self.play(Write(demoivre))
-        self.wait(3)
-
-        # Final summary with better positioning
-        summary = Text(
-            "These formulas help us find all\n"
-            "nth roots of unity and understand\n"
-            "their beautiful patterns",
-            font_size=24,
-            line_spacing=1.5,
-            color=GREEN
-        )
-        summary.next_to(demoivre_group, DOWN, buff=1)
-        summary.align_to(title, LEFT)
-        
-        self.play(Write(summary))
-        self.wait(3)
-
         # Final fadeout
         self.play(
             *[FadeOut(mob) for mob in self.mobjects]
