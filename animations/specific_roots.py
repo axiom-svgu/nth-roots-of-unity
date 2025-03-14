@@ -11,8 +11,8 @@ from animations.equations import (
 class SpecificRootsScene(Scene):
     def construct(self):
         # Title
-        title = Text("Exploring Specific Roots of Unity", font_size=40)
-        title.to_edge(UP)
+        title = Text("Exploring Specific Roots of Unity", font_size=36)
+        title.to_edge(UP, buff=0.5)
         self.play(Write(title))
         self.wait(1)
 
@@ -25,22 +25,22 @@ class SpecificRootsScene(Scene):
                     "stroke_opacity": 0.6,
                     "stroke_width": 1,
                 }
-            ).scale(1.2)
+            ).scale(1)
             
-            circle = Circle(radius=1.2, color=BLUE)
+            circle = Circle(radius=1, color=BLUE)
             circle.move_to(plane.get_center())
             
             # Add axis labels
-            x_label = Text("Re", font_size=24)
-            x_label.next_to(plane.x_axis.get_end(), DOWN + RIGHT, buff=0.2)
+            x_label = Text("Re", font_size=20)
+            x_label.next_to(plane.x_axis.get_end(), DOWN + RIGHT, buff=0.1)
             
-            y_label = Text("Im", font_size=24)
-            y_label.next_to(plane.y_axis.get_end(), UP + LEFT, buff=0.2)
+            y_label = Text("Im", font_size=20)
+            y_label.next_to(plane.y_axis.get_end(), UP + LEFT, buff=0.1)
             
             return VGroup(plane, circle, x_label, y_label)
 
         # Function to create root dots and labels
-        def create_root_points(n, radius=1.2):
+        def create_root_points(n, radius=1):
             dots = VGroup()
             labels = VGroup()
             
@@ -62,33 +62,46 @@ class SpecificRootsScene(Scene):
                 else:
                     label_text = f"e^{{2\\pi i {k}/{n}}}"
                 
-                label = MathTex(label_text, font_size=24)
+                label = MathTex(label_text, font_size=20)
                 offset = 0.3 * np.array([np.cos(angle), np.sin(angle), 0])
                 label.next_to(dot, normalize(point) * 0.5, buff=0.1)
                 labels.add(label)
             
             return dots, labels
 
-        # Square roots of unity (n=2)
+        # Create main plane setup and shift it right
         setup = create_plane_setup()
+        setup.shift(RIGHT * 3)
         self.play(Create(setup))
-        
-        square_title = Text("Square Roots of Unity (n=2)", font_size=32)
-        square_title.next_to(title, DOWN)
+
+        # Create a box for equations on the left side
+        eq_box = Rectangle(
+            width=4.5,
+            height=3,
+            stroke_color=GREY,
+            stroke_opacity=0.5
+        ).shift(LEFT * 3)
+        self.play(Create(eq_box))
+
+        # Square roots of unity (n=2)
+        square_title = Text("Square Roots of Unity (n=2)", font_size=24)
+        square_title.next_to(title, DOWN, buff=0.3)
         
         self.play(Write(square_title))
         
         dots2, labels2 = create_root_points(2)
+        dots2.shift(RIGHT * 3)
+        labels2.shift(RIGHT * 3)
         self.play(
             Create(dots2),
             Write(labels2)
         )
         
         # Show equation for square roots
-        square_eq = MathTex("z^2 = 1")
-        square_eq.to_edge(LEFT).shift(UP)
-        square_solutions = MathTex("z = \\pm 1")
-        square_solutions.next_to(square_eq, DOWN)
+        square_eq = MathTex("z^2 = 1", font_size=32)
+        square_eq.move_to(eq_box.get_center() + UP * 0.5)
+        square_solutions = MathTex("z = \\pm 1", font_size=32)
+        square_solutions.next_to(square_eq, DOWN, buff=0.5)
         
         self.play(
             Write(square_eq),
@@ -102,24 +115,27 @@ class SpecificRootsScene(Scene):
         )
         
         # Cube roots of unity (n=3)
-        cube_title = Text("Cube Roots of Unity (n=3)", font_size=32)
-        cube_title.next_to(title, DOWN)
+        cube_title = Text("Cube Roots of Unity (n=3)", font_size=24)
+        cube_title.next_to(title, DOWN, buff=0.3)
         
         self.play(Write(cube_title))
         
         dots3, labels3 = create_root_points(3)
+        dots3.shift(RIGHT * 3)
+        labels3.shift(RIGHT * 3)
         self.play(
             Create(dots3),
             Write(labels3)
         )
         
         # Show equation for cube roots
-        cube_eq = MathTex("z^3 = 1")
-        cube_eq.to_edge(LEFT).shift(UP)
+        cube_eq = MathTex("z^3 = 1", font_size=32)
+        cube_eq.move_to(eq_box.get_center() + UP * 0.5)
         cube_solutions = MathTex(
-            "z = 1, -\\frac{1}{2} \\pm i\\frac{\\sqrt{3}}{2}"
+            "z = 1, -\\frac{1}{2} \\pm i\\frac{\\sqrt{3}}{2}",
+            font_size=28
         )
-        cube_solutions.next_to(cube_eq, DOWN)
+        cube_solutions.next_to(cube_eq, DOWN, buff=0.5)
         
         self.play(
             Write(cube_eq),
@@ -133,22 +149,24 @@ class SpecificRootsScene(Scene):
         )
         
         # Fourth roots of unity (n=4)
-        fourth_title = Text("Fourth Roots of Unity (n=4)", font_size=32)
-        fourth_title.next_to(title, DOWN)
+        fourth_title = Text("Fourth Roots of Unity (n=4)", font_size=24)
+        fourth_title.next_to(title, DOWN, buff=0.3)
         
         self.play(Write(fourth_title))
         
         dots4, labels4 = create_root_points(4)
+        dots4.shift(RIGHT * 3)
+        labels4.shift(RIGHT * 3)
         self.play(
             Create(dots4),
             Write(labels4)
         )
         
         # Show equation for fourth roots
-        fourth_eq = MathTex("z^4 = 1")
-        fourth_eq.to_edge(LEFT).shift(UP)
-        fourth_solutions = MathTex("z = 1, i, -1, -i")
-        fourth_solutions.next_to(fourth_eq, DOWN)
+        fourth_eq = MathTex("z^4 = 1", font_size=32)
+        fourth_eq.move_to(eq_box.get_center() + UP * 0.5)
+        fourth_solutions = MathTex("z = 1, i, -1, -i", font_size=32)
+        fourth_solutions.next_to(fourth_eq, DOWN, buff=0.5)
         
         self.play(
             Write(fourth_eq),
@@ -156,9 +174,9 @@ class SpecificRootsScene(Scene):
         )
         self.wait(2)
         
-        # Show Euler's formula as a reminder
-        euler = MathTex(EULER_FORMULA)
-        euler.to_edge(DOWN)
+        # Show Euler's formula at the bottom
+        euler = MathTex(EULER_FORMULA, font_size=28)
+        euler.to_edge(DOWN, buff=0.5)
         self.play(Write(euler))
         self.wait(2)
         
