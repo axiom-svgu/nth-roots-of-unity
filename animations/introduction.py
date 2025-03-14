@@ -1,5 +1,5 @@
 from manim import *
-from manim.equations import (
+from animations.equations import (
     ROOTS_OF_UNITY_TITLE,
     COMPLEX_PLANE_TITLE,
     PROPERTIES,
@@ -12,7 +12,7 @@ class IntroductionScene(Scene):
         # Create title
         title = MathTex(ROOTS_OF_UNITY_TITLE)
         title.scale(1.5)
-        title.to_edge(UP)
+        title.to_edge(UP + LEFT)
 
         # Create a complex plane
         plane = ComplexPlane(
@@ -22,13 +22,17 @@ class IntroductionScene(Scene):
                 "stroke_opacity": 0.6,
                 "stroke_width": 1,
             }
-        ).scale(1.5)
+        ).scale(1.2)
+        
+        # Position plane on the right side
+        plane.shift(RIGHT * 3)
         
         plane_title = MathTex(COMPLEX_PLANE_TITLE)
         plane_title.next_to(plane, UP)
 
         # Create unit circle
-        circle = Circle(radius=1.5, color=BLUE)
+        circle = Circle(radius=1.2, color=BLUE)
+        circle.shift(RIGHT * 3)  # Move circle to match plane position
 
         # Animation sequence
         self.play(Write(title))
@@ -43,13 +47,13 @@ class IntroductionScene(Scene):
         self.play(Create(circle))
         self.wait()
 
-        # Display properties one by one
+        # Display properties one by one under the title
         properties = VGroup()
         for i, prop in enumerate(PROPERTIES):
             property_tex = MathTex(prop)
-            property_tex.scale(0.8)
-            property_tex.to_edge(LEFT)
-            property_tex.shift(DOWN * (i * 0.7 + 1))
+            property_tex.scale(0.7)
+            property_tex.next_to(title, DOWN, buff=0.8 + i * 0.7)
+            property_tex.align_to(title, LEFT)
             properties.add(property_tex)
 
         for prop in properties:
@@ -61,16 +65,20 @@ class IntroductionScene(Scene):
         # Clear properties and show important formulas
         self.play(FadeOut(properties))
         
-        # Show Euler's formula
+        # Show Euler's formula under the title
         euler = MathTex(EULER_FORMULA)
-        euler.next_to(plane, DOWN, buff=0.5)
+        euler.scale(0.9)
+        euler.next_to(title, DOWN, buff=0.8)
+        euler.align_to(title, LEFT)
         
         self.play(Write(euler))
         self.wait()
         
-        # Show De Moivre's formula
+        # Show De Moivre's formula under Euler's formula
         demoivre = MathTex(DE_MOIVRE_FORMULA)
+        demoivre.scale(0.9)
         demoivre.next_to(euler, DOWN, buff=0.5)
+        demoivre.align_to(euler, LEFT)
         
         self.play(Write(demoivre))
         self.wait(2)

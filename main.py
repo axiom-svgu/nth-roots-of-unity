@@ -1,10 +1,9 @@
 import sys
-from manim import config, Scene
-from manim.introduction import IntroductionScene, ComplexRootVisualization
+from manim import Scene
+from animations.introduction import IntroductionScene, ComplexRootVisualization
 
 def render_manim_scene(scene_class: type[Scene]) -> None:
     """Render a specific Manim scene."""
-    config.preview = True  # Show the scene after rendering
     scene = scene_class()
     scene.render()
 
