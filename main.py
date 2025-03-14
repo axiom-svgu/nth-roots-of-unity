@@ -1,6 +1,7 @@
 import sys
 from manim import Scene
 from animations.introduction import IntroductionScene, ComplexRootVisualization
+from animations.specific_roots import SpecificRootsScene, RootPatternScene
 from slides.slide_generator import SlideGenerator
 
 def render_manim_scene(scene_class: type[Scene]) -> None:
@@ -14,6 +15,8 @@ def list_available_scenes() -> list[tuple[int, str, type[Scene]]]:
     scenes = [
         (1, "Introduction to Roots of Unity", IntroductionScene),
         (2, "Complex Root Visualization", ComplexRootVisualization),
+        (3, "Specific Roots of Unity", SpecificRootsScene),
+        (4, "Root Pattern Visualization", RootPatternScene),
     ]
     return scenes
 

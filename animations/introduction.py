@@ -1,10 +1,7 @@
 from manim import *
 from animations.equations import (
     ROOTS_OF_UNITY_TITLE,
-    COMPLEX_PLANE_TITLE,
     PROPERTIES,
-    EULER_FORMULA,
-    DE_MOIVRE_FORMULA
 )
 
 class IntroductionScene(Scene):
