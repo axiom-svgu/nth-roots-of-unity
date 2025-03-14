@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nth Roots of Unity</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css"
+    />
+    <style>
+      .reveal {
+        font-family: "Source Sans Pro", sans-serif;
+      }
+      .reveal h1,
+      .reveal h2,
+      .reveal h3 {
+        color: #2196f3;
+      }
+      .reveal .math {
+        font-size: 1.2em;
+      }
+      .reveal section img {
+        border: none;
+        box-shadow: none;
+      }
+      .reveal pre {
+        box-shadow: none;
+        margin: 20px auto;
+      }
+      .reveal .slide-number {
+        font-size: 24px;
+      }
+    </style>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        
+        <section data-transition="slide"><h1>Nth Roots of Unity</h1>
+<h2>A Journey through Complex Numbers</h2>
+<p>The nth roots of unity are the complex numbers z that satisfy the equation:</p>
+<p>[ z^n = 1 ]</p>
+<p>For any positive integer n, there are exactly n complex numbers that satisfy this equation.</p>
+<hr />
+<h2>Properties</h2>
+<ol>
+<li>All nth roots of unity lie on the unit circle</li>
+<li>They are evenly spaced around the circle</li>
+<li>They form a cyclic group under multiplication</li>
+</ol>
+<p>The kth root is given by:</p>
+<p>[ \omega_k = e^{2\pi i k/n} = \cos(2\pi k/n) + i\sin(2\pi k/n) ]</p>
+<p>where k = 0, 1, 2, ..., n-1</p></section>
+        
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        transition: "slide",
+        math: {
+          mathjax:
+            "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+          config: "TeX-AMS_HTML-full",
+        },
+        plugins: [],
+      });
+    </script>
+  </body>
+</html>

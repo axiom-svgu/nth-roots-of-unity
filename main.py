@@ -1,6 +1,7 @@
 import sys
 from manim import Scene
 from animations.introduction import IntroductionScene, ComplexRootVisualization
+from slides.slide_generator import SlideGenerator
 
 def render_manim_scene(scene_class: type[Scene]) -> None:
     """Render a specific Manim scene."""
@@ -17,8 +18,14 @@ def list_available_scenes() -> list[tuple[int, str, type[Scene]]]:
 
 def render_slides() -> None:
     """Render the presentation slides."""
-    print("\nSlide rendering functionality will be implemented here.")
-    print("This will handle the slide generation process.")
+    print("\nGenerating presentation slides...")
+    try:
+        generator = SlideGenerator()
+        generator.generate_slides()
+        print("\nSlides generated successfully!")
+        print("You can open the presentation in your browser at: slides/output/presentation.html")
+    except Exception as e:
+        print(f"\nError generating slides: {str(e)}")
 
 def main():
     while True:

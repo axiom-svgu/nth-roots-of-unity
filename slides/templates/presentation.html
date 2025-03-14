@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nth Roots of Unity</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css"
+    />
+    <style>
+      .reveal {
+        font-family: "Source Sans Pro", sans-serif;
+      }
+      .reveal h1,
+      .reveal h2,
+      .reveal h3 {
+        color: #2196f3;
+      }
+      .reveal .math {
+        font-size: 1.2em;
+      }
+      .reveal section img {
+        border: none;
+        box-shadow: none;
+      }
+      .reveal pre {
+        box-shadow: none;
+        margin: 20px auto;
+      }
+      .reveal .slide-number {
+        font-size: 24px;
+      }
+    </style>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        {% for slide in slides %}
+        <section data-transition="slide">{{ slide | safe }}</section>
+        {% endfor %}
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        transition: "slide",
+        math: {
+          mathjax:
+            "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+          config: "TeX-AMS_HTML-full",
+        },
+        plugins: [],
+      });
+    </script>
+  </body>
+</html>
